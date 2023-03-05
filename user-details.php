@@ -1,30 +1,37 @@
-<html>
+<?php
 
-<a href='http://localhost/HW%202/login-form.php'>Login-Form</a> <br>
-<a href='http://localhost/HW%202/user-list.php'>User-List</a> <br>
-<a href='http://localhost/HW%202/user-add.php'>User-Add</a> <br>
+require_once  'login.php';
 
-	<head>
-		<title>User Details</title>
-	</head>
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error) die($conn->connect_error);
+
+$query = "SELECT * FROM user";
+
+$result = $conn->query($query); 
+if(!$result) die($conn->error);
+
+$rows = $result->num_rows;
+
+for($j=0; $j<$rows; $j++)
+{
+	//$result->data_seek($j); 
+	$row = $result->fetch_array(MYSQLI_ASSOC); 
+
+echo <<<_END
+	<pre>
+	ID: <a href='user-add.php?id=$row[id]'>$row[id]</a>
+	Username: $row[username]
+	Forename: $row[forename]
+	Surname: $row[surname]
+	Password: $row[password]	
+	</pre>
 	
-	<body>
-	<H1>User Details</H1>
+_END;
 
-	<form action='somefile.php' method='post'>
-		Name: Taylor Swift <br>
-		Username: taylorswift23 <br>
-		Password: a************** <br>
-		Birthdate: 12/13/1989 <br>
-		Phone Number: (615) 379-8559 <br>
-		Email Address: taylorswift23@gmail.com <br>
-		
-	</form>
+}
 
-	<form action="file:///Applications/MAMP/htdocs/HW 1/user-list.html">
-        	 <button type="submit">Return to User List</button>
-	</form>
+$conn->close();
 
-	</body>
 
-</html>
+
+?>

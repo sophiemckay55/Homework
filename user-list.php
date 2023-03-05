@@ -1,33 +1,33 @@
-<html>
+<?php
 
-<a href='http://localhost/HW%202/login-form.php'>Login-Form</a> <br>
-<a href='http://localhost/HW%202/user-details.php'>User-Details</a> <br>
-<a href='http://localhost/HW%202/user-add.php'>User-Add</a> <br>
+require_once  'login.php';
 
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error) die($conn->connect_error);
 
-	<head>
-		<title>User List</title>
-	</head>
+$query = "SELECT * FROM user";
+
+$result = $conn->query($query); 
+if(!$result) die($conn->error);
+
+$rows = $result->num_rows;
+
+for($j=0; $j<$rows; $j++)
+{
+	//$result->data_seek($j); 
+	$row = $result->fetch_array(MYSQLI_ASSOC); 
+
+echo <<<_END
+	<pre>
+	User: <a href='user-details.php?id=$row[id]'>$row[username]</a>
+	</pre>
 	
-	<body>
-	<H1>User List</H1>
+_END;
 
-	<form action="file:///Applications/MAMP/htdocs/HW 1/user-add.html">
-        	 <button type="submit">Add User</button>
-	</form>
+}
 
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Taylor Swift </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Andrew Hozier-Byrne </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Taylor Meier </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Harry Styles </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Noah Kahan </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Gregory Alan Isakov </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Matt Quinn </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Jack Antonoff </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Ela Melo </a>
-	<p><a href="file:///Applications/MAMP/htdocs/HW 1/user-details.html"> Phoebe Bridgers </a>
-	
+$conn->close();
 
-	</body>
 
-</html>
+
+?>

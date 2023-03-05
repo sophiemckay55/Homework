@@ -1,37 +1,54 @@
 <html>
-
-<a href='http://localhost/HW%202/login-form.php'>Login-Form</a> <br>
-<a href='http://localhost/HW%202/user-list.php'>User-List</a> <br>
-<a href='http://localhost/HW%202/user-details.php'>User-Details</a> <br>
-
 	<head>
-		<title>User Add</title>
+	
 	</head>
 	
 	<body>
-	<H1>User Add</H1>
-
-	<form action='somefile.php' method='post'>
-		Name:<br>
-		<input type="text" name="name"><br><br>
-		Username:<br>
-		<input type="text" name="username"><br><br>
-		Password:<br>
-		<input type="text" name="password"><br><br>
-		Birthdate:<br>
-		<input type="text" name="birthdate"><br><br>
-		Phone Number:<br>
-		<input type="text" name="phone number"><br><br>
-		Email Address:<br>
-		<input type="text" name="email address"><br><br>
-
-		
-	</form>
-
-	<form action="file:///Applications/MAMP/htdocs/HW 1/user-list.html">
-        	 <button type="submit">Submit</button>
-	</form>
-
+		<form method='post' action='user-add.php'>
+			<pre>
+				Username: <input type='text' name='username'>
+				Forename: <input type='text' name='forename'>
+				Surname: <input type='text' name='surname'>
+				Password: <input type='text' name='password'>
+				<input type='submit' value='Add User'>
+			</pre>
+		</form>
 	</body>
-
 </html>
+
+
+<?php
+//import credentials for db
+require_once  'login.php';
+
+//connect to db
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error) die($conn->connect_error);
+
+//check if Username exists
+if(isset($_POST['username'])) 
+{
+
+	//Get data from POST object
+	$username = $_POST['username'];
+	$forename = $_POST['forename'];
+	$surname = $_POST['surname'];
+	$password = $_POST['password'];
+	
+	
+	$query = "INSERT INTO user (username, forename, surname, password) VALUES ('$username', '$forename','$surname', '$password')";
+	
+	//echo $query.'<br>';
+	$result = $conn->query($query); 
+	if(!$result) die($conn->error);
+	
+	header("Location: user-list.php");//this will return you to the view all page
+	
+	
+	
+	
+}
+
+
+
+?>
