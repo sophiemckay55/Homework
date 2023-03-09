@@ -1,21 +1,9 @@
 <?php
 
-$hn = 'localhost';
-$db = 'movie'; 
-$un = 'root';
-$pw = 'root';
-
-
-
-
-
-
-
-
-
-
-
-
+$hn='localhost';
+$db='movie';
+$un='root';
+$pw='root';
 
 
 

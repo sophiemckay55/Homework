@@ -19,7 +19,10 @@
 
 <?php
 //import credentials for db
-require_once  'login.php';
+$page_roles = array('admin');
+
+require_once 'login.php';
+require_once  'checksession.php';
 
 //connect to db
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -49,6 +52,6 @@ if(isset($_POST['username']))
 	
 }
 
-
+echo "<pre><a href='user-logout.php'>Logout</a></pre>";
 
 ?>
